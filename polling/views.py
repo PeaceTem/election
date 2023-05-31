@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views.generic import DetailView, TemplateView, View
@@ -53,7 +53,7 @@ def totalLgaResult(request, lga_id):
 
     return JsonResponse({'total':result})
 
-
+from django.contrib import messages
 
 class CreatePollingUnit(TemplateView):
     template_name='polling/create_polling_unit.html'
@@ -64,14 +64,41 @@ class CreatePollingUnit(TemplateView):
 
         return context
 
+    def post(self, request, *args, **kwargs):
+        polling_unit_id = self.request.POST.get('polling_unit_id')
+        polling_unit_number = self.request.POST.get('polling_unit_number')
+        polling_unit_name = self.request.POST.get('polling_unit_name')
+        polling_unit_description = self.request.POST.get('polling_unit_description')
+        lat = self.request.POST.get('lat')
+        long = self.request.POST.get('long')
+        lga_id = self.request.POST.get('lga_id')
+        ward_id = self.request.POST.get('ward_id').split('|')
+
+        polling_unit.objects.create(polling_unit_id=polling_unit_id,
+                                    polling_unit_number=polling_unit_number,
+                                    polling_unit_name=polling_unit_name,
+                                    polling_unit_description=polling_unit_description,
+                                    lat=lat,
+                                    long=long,
+                                    lga_id=lga_id,
+                                    ward_id=ward_id[0],
+                                    uniquewardid=ward_id[1])
+        messages.success(self.request, 'Polling unit registered successfully!')
+
+        return redirect(self.request.META.get("HTTP_REFERER"))
 
 
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializer import WardSerializer
 
 
+@api_view(['GET'])
 def getWards(request, lga_id):
     print(lga_id)
     wards = ward.objects.filter(lga_id=lga_id)
     print("Working")
-    return JsonResponse({'wards':wards})
+    wards = WardSerializer(wards, many=True).data
+    return Response(wards)
 

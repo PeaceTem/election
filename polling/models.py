@@ -15,6 +15,10 @@ class agentname(models.Model):
         return f"{self.firstname}"
 
 
+    class Meta:
+        verbose_name_plural = 'agentnames'
+
+
 
 class announced_lga_results(models.Model):
     lga_name = models.CharField(max_length=50)
@@ -27,6 +31,11 @@ class announced_lga_results(models.Model):
 
     def __str__(self):
         return f"{self.lga_name}"
+
+
+    class Meta:
+        verbose_name_plural = 'announced_lga_results'
+
 
 
 
@@ -43,6 +52,11 @@ class announced_pu_results(models.Model):
         return f"{self.party_abbreviation}"
 
 
+    class Meta:
+        verbose_name_plural = 'announced_pu_results'
+
+
+
 
 class announced_state_results(models.Model):
     state_name = models.CharField(max_length=50)
@@ -55,6 +69,11 @@ class announced_state_results(models.Model):
 
     def __str__(self):
         return f"{self.state_name}"
+
+
+    class Meta:
+        verbose_name_plural = 'announced_state_results'
+
 
 
 
@@ -70,6 +89,11 @@ class announced_ward_results(models.Model):
         return f"{self.ward_name}"
 
 
+    class Meta:
+        verbose_name_plural = 'announced_ward_results'
+
+
+
 
 class lga(models.Model):
     lga_id = models.PositiveIntegerField()
@@ -77,12 +101,18 @@ class lga(models.Model):
     state_id = models.PositiveIntegerField()
     lga_description = models.TextField(max_length=1000)
     entered_by_user = models.CharField(max_length=50)
-    # date_entered = models.DateTimeField(auto_now_add=True)
+    date_entered = models.DateTimeField(auto_now_add=True)
     user_ip_address = models.CharField(max_length=50)
 
 
     def __str__(self):
         return f"{self.lga_name}"
+
+
+    class Meta:
+        verbose_name_plural = 'lgas'
+
+
 
 
 class party(models.Model):
@@ -92,6 +122,12 @@ class party(models.Model):
 
     def __str__(self):
         return f"{self.partyname}"
+
+
+    class Meta:
+        verbose_name_plural = 'parties'
+
+
 
 
 class polling_unit(models.Model):
@@ -112,6 +148,11 @@ class polling_unit(models.Model):
         return f"{self.polling_unit_name}, {self.polling_unit_number}"
 
 
+    class Meta:
+        verbose_name_plural = 'polling_units'
+
+
+
 
 class states(models.Model):
     state_id = models.PositiveIntegerField(primary_key=True)
@@ -120,6 +161,12 @@ class states(models.Model):
 
     def __str__(self):
         return f"{self.state_name}"
+
+
+    class Meta:
+        verbose_name_plural = 'states'
+
+
 
 
 
@@ -136,7 +183,8 @@ class ward(models.Model):
     def __str__(self):
         return f"{self.ward_name}"
 
-
+    class Meta:
+        verbose_name_plural = 'wards'
 
 
 

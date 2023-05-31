@@ -48,7 +48,7 @@
             <div class="form-group">
             <label for="lga_id">Local Government Area:</label>
 
-            <select id="lga_id" class="custom-select" required>
+            <select name="lga_id" id="lga_id" class="custom-select" required>
                 <option value="" disabled selected>Select an option</option>
             
                 {% for lga in lgas %}
@@ -59,13 +59,9 @@
               <div class="form-group">
                 <label for="ward_id">Ward:</label>
 
-              <select id="ward_id" class="custom-select" required>
+              <select name="ward_id" id="ward_id" class="custom-select" required>
                 <option value="" disabled selected>Select an option</option>
-                {% comment %} this field will be fetched and innerHTML += will take over
-                get the ward an {% endcomment %}
-                {% comment %} {% for ward in wards %}
-                <option value="{{ward.ward_id}|{{ward.id}}">{{ ward.ward_name }}</option>
-                {% endfor %}  {% endcomment %}
+
               </select>
             </div>
             <div class="form-group">
@@ -85,7 +81,6 @@
         
         function sendSelectedValue() {
             var selectedValue = selectElement.value;
-            alert(selectedValue)
             fetch("/polling/wards/" + selectedValue, {
               method: "GET",
               headers: {
@@ -95,8 +90,12 @@
             .then(response => response.json())
             .then(data => {
               // Handle the API response here
-                alert(data.ward)
-                console.log(data)
+                let selectWard = document.getElementById('ward_id');
+                selectWard.innerHTML = '';
+                selectWard.innerHTML += `<option value="" disabled selected>Select an option</option>`
+                data.forEach((ward)=>{
+                    selectWard.innerHTML += `<option value="${ward.ward_id}|${ward.id}">${ward.ward_name}</option>`;
+                })
             })
             .catch(error => {
               // Handle any errors
