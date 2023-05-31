@@ -1,6 +1,11 @@
-use django messages for message after creation
-use the style of the Dr. Ayinla's project
+use django messages for message after creation ('add timer 5 seconds') (DONE)
+use the style of the Dr. Ayinla's project (DONE)
 download questionaire and fill
 finish the submission on time
 host on python anywhere
-add a readMe.md file to explain all your code
+add a readMe.md file to explain all your code (DONE)
+
+#set debug mode to false
+
+don't forget to enter the result of each party for the polling unit (DONE)
+

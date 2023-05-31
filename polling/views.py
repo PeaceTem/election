@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import DetailView, TemplateView, View
 from .models import *
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 class PollingUnitDetailView(DetailView):
@@ -61,7 +61,7 @@ class CreatePollingUnit(TemplateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['lgas'] = lga.objects.all()
-
+        context['parties'] = party.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -74,7 +74,7 @@ class CreatePollingUnit(TemplateView):
         lga_id = self.request.POST.get('lga_id')
         ward_id = self.request.POST.get('ward_id').split('|')
 
-        polling_unit.objects.create(polling_unit_id=polling_unit_id,
+        pu = polling_unit.objects.create(polling_unit_id=polling_unit_id,
                                     polling_unit_number=polling_unit_number,
                                     polling_unit_name=polling_unit_name,
                                     polling_unit_description=polling_unit_description,
@@ -83,9 +83,23 @@ class CreatePollingUnit(TemplateView):
                                     lga_id=lga_id,
                                     ward_id=ward_id[0],
                                     uniquewardid=ward_id[1])
-        messages.success(self.request, 'Polling unit registered successfully!')
+        # messages.success(self.request, 'Polling unit registered successfully!')
 
-        return redirect(self.request.META.get("HTTP_REFERER"))
+        # return redirect(self.request.META.get("HTTP_REFERER"))
+
+        parties = self.request.POST.getlist('partynames')
+        no_of_votes = self.request.POST.getlist('party')
+
+        for party,vote in zip(parties,no_of_votes):
+            announced_pu_results.objects.create(polling_unit_uniqueid=pu.id,
+                                                party_abbreviation=party,
+                                                party_score=int(vote))
+            
+        return JsonResponse({"message":"Successful"})
+    
+
+
+
 
 
 

@@ -21,7 +21,15 @@ body{
     padding: 20px;
     /* min-height: 200px; */
 }
-
+#polling-unit-form{
+    width: 55vw;
+}
+#polling-unit-form #div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
 .custom-select {
     width: 200px;
     padding: 10px;
@@ -52,7 +60,7 @@ input[type="submit"]{
     outline: none;
     border: none;
     border-radius: 4px;
-    width: 200px;
+    width: 100%;
 }
 
 input[type="submit"]:hover{
@@ -71,3 +79,18 @@ select, textarea {
     padding: 4px;
 
 }
+
+
+      
+#notification {
+    position: fixed;
+    top: 20px;
+    color: white;
+    /* right: 20px; */
+    background-color: #5caf4c;
+    padding: 10px;
+    display: none;
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+  }

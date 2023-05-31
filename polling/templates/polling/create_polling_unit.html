@@ -10,8 +10,10 @@
 
     <div id="formBx">
         <h2>Register Polling Unit</h2>
-        <form method='post'>
-            {% csrf_token %}
+        <form method='post' id="polling-unit-form", action="">
+          {% csrf_token %}
+        <div id="div">
+          <div>
             <div class="form-group">
             <label for="polling_unit_id">Polling Unit ID:</label>
             <input id="polling_unit_id" name="polling_unit_id" type="number" required>
@@ -64,6 +66,21 @@
 
               </select>
             </div>
+          </div>
+
+            <div>
+            {% for party in parties %}
+
+            <div class="form-group">
+              <label for="{{party.partyname}}">{{party.partyname}}:</label>
+              <input id="{{party.partyname}}" name="party" type="number">
+              <input type="hidden" value="{{party.partyid}}" name="partynames">
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+          
+
             <div class="form-group">
                 <input id="submit" value='Submit' type="submit">
             </div>
@@ -107,5 +124,46 @@
         
         </script>
 
+
+<script>
+  var form = document.getElementById("polling-unit-form");
+  form.addEventListener("submit", function (event) {
+      event.preventDefault(); 
+      submitForm();
+  });
+  var notification = document.createElement("div");
+          notification.textContent = "Data saved successfully!";
+          notification.setAttribute("id", "notification");;
+          document.body.appendChild(notification);
+      
+  function submitForm() {
+    var form = document.getElementById("polling-unit-form");
+    var formData = new FormData(form);
+    fetch(form.action, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from the server
+          let notification = document.getElementById('notification');
+            notification.style.display = "block";
+          setTimeout(function() {
+            notification.style.display = "none";
+          }, 5000);
+          let form = document.getElementById('polling-unit-form');
+          form.reset();
+
+    })
+    .catch(error => {
+        // Handle any errors that occur during the request
+        console.error(error);
+    });
+}
+
+</script>
 </body>
 </html>

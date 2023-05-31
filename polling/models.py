@@ -176,7 +176,7 @@ class ward(models.Model):
     lga_id = models.PositiveIntegerField()
     ward_description = models.TextField(max_length=1000)
     entered_by_user = models.CharField(max_length=50)
-    # date_entered = models.DateTimeField(auto_now_add=True)
+    date_entered = models.DateTimeField(auto_now_add=True)
     user_ip_address = models.CharField(max_length=50)
 
 
