@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Create New Polling Unit</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'polling/css/create.css' %}">
+</head>
+<body>
+
+    <div id="formBx">
+        <h2>Register Polling Unit</h2>
+        <form method='post'>
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="polling_unit_id">Polling Unit ID:</label>
+            <input id="polling_unit_id" name="polling_unit_id" type="number" required>
+            </div>
+
+            <div class="form-group">
+            <label for="polling_unit_number">Polling Unit Number:</label>
+
+            <input id="polling_unit_number" name="polling_unit_number" type="text" required>
+            </div>
+
+            <div class="form-group">
+            <label for="polling_unit_name">Polling Unit Name:</label>
+
+            <input id="polling_unit_name" name="polling_unit_name" type="text" required>
+            </div>
+
+            <div class="form-group">
+            <label for="polling_unit_description">Polling Unit Description:</label>
+
+            <textarea id="polling_unit_description" name="polling_unit_description" type="text" required></textarea>
+            </div>
+            <div class="form-group">
+            <label for="lat">Latitude:</label>
+
+            <input id="lat" name="lat" type="text" required>
+            </div>
+            <div class="form-group">
+            <label for="long">Longitude:</label>
+
+            <input id="long" name="long" type="text" required>
+            </div>
+
+            <div class="form-group">
+            <label for="lga_id">Local Government Area:</label>
+
+            <select id="lga_id" class="custom-select" required>
+                <option value="" disabled selected>Select an option</option>
+            
+                {% for lga in lgas %}
+                <option value="{{lga.id}}">{{ lga.lga_name }}</option>
+                {% endfor %} 
+              </select>
+            </div>
+              <div class="form-group">
+                <label for="ward_id">Ward:</label>
+
+              <select id="ward_id" class="custom-select" required>
+                <option value="" disabled selected>Select an option</option>
+                {% comment %} this field will be fetched and innerHTML += will take over
+                get the ward an {% endcomment %}
+                {% comment %} {% for ward in wards %}
+                <option value="{{ward.ward_id}|{{ward.id}}">{{ ward.ward_name }}</option>
+                {% endfor %}  {% endcomment %}
+              </select>
+            </div>
+            <div class="form-group">
+                <input id="submit" value='Submit' type="submit">
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+    
+        var selectElement = document.getElementById("lga_id");
+        
+        selectElement.addEventListener('change', ()=>{
+            sendSelectedValue();
+        })
+        
+        function sendSelectedValue() {
+            var selectedValue = selectElement.value;
+            alert(selectedValue)
+            fetch("/polling/wards/" + selectedValue, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+              // Handle the API response here
+                alert(data.ward)
+                console.log(data)
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+          }
+        
+        
+        
+        </script>
+
+</body>
+</html>

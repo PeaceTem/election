@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Polling Unit Details</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'polling/css/polling_unit.css' %}">
+</head>
+<body>
+  <h1>Polling Unit Details</h1>
+  <table>
+    <tr>
+      <th>Polling Unit Name</th>
+      <td>{{ polling_unit.polling_unit_name }}</td>
+    </tr>
+
+    <tr>
+        <th>Polling Unit ID</th>
+        <td>{{ polling_unit.polling_unit_id }}</td>
+    </tr>
+
+    <tr>
+        <th>Polling Unit Number</th>
+        <td>{{ polling_unit.polling_unit_number }}</td>
+    </tr>
+    <tr>
+        <th>Polling Unit Name</th>
+        <td>{{ polling_unit.polling_unit_name }}</td>
+    </tr>
+    <tr>
+        <th>Polling Unit Description</th>
+        <td>{{ polling_unit.polling_unit_description }}</td>
+    </tr>
+
+    <tr>
+      <th>Ward</th>
+      <td>{{ polling_unit.ward_id }}</td>
+    </tr>
+    <tr>
+      <th>LGA</th>
+      <td>{{ lga }}</td>
+    </tr>
+    <tr>
+        <th>Latitude</th>
+        <td>{{ polling_unit.lat }}</td>
+    </tr>
+    <tr>
+        <th>Longitude</th>
+        <td>{{ polling_unit.long }}</td>
+    </tr>
+  </table>
+</body>
+</html>

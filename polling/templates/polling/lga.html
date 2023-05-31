@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Local Government</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'polling/css/lga.css' %}">
+</head>
+<body>
+<div id="container">
+<h2>
+    Local Government Areas
+</h2>
+<p> Try Ika - South </p>
+<form mathod='post'>
+    {% csrf_token %}
+<select id="mySelect" class="custom-select">
+    <option value="" disabled selected>Select an option</option>
+
+    {% for lga in lgas %}
+    <option value="{{lga.id}}">{{ lga.lga_name }}</option>
+    {% endfor %} 
+  </select>
+</form>
+<div class="number-container">
+    The total votes casted is
+    <span id="number">0</span>
+  </div>
+</div>
+
+  <script>
+    
+    var selectElement = document.getElementById("mySelect");
+    
+    selectElement.addEventListener('change', ()=>{
+        sendSelectedValue();
+    })
+    
+    function sendSelectedValue() {
+        var selectedValue = selectElement.value;
+        fetch("/polling/lga_total/" + selectedValue, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+        }
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the API response here
+          sum = document.getElementById('number');
+          sum.textContent = data.total;
+        
+        })
+        .catch(error => {
+          // Handle any errors
+          console.error(error);
+        });
+      }
+    
+    
+    
+    </script>
+</body>
+  
