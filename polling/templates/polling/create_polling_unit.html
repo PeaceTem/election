@@ -7,7 +7,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'polling/css/create.css' %}">
 </head>
 <body>
-
+  <div id="absolute">
+    <a class="link" href="{% url 'lga' %}">LGA</a>
+    <a class="link" href="{% url 'polling_unit_detail' 17 %}">Polling Unit</a>
+  </div>
     <div id="formBx">
         <h2>Register Polling Unit</h2>
         <form method='post' id="polling-unit-form", action="">

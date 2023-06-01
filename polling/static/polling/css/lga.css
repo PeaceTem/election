@@ -20,6 +20,21 @@ body{
     min-height: 200px;
 }
 
+#absolute{
+  position: fixed;
+  top: 20px;
+  right:20px;
+}
+
+#absolute > .link{
+  text-decoration: none;
+  color: white;
+  background: blueviolet;
+  padding: 10px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
 .custom-select {
     width: 200px;
     padding: 10px;

@@ -7,6 +7,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'polling/css/lga.css' %}">
 </head>
 <body>
+  <div id="absolute">
+    <a class="link" href="{% url 'create-polling-unit' %}">New</a>
+    <a class="link" href="{% url 'polling_unit_detail' 17 %}">Polling Unit</a>
+  </div>
 <div id="container">
 <h2>
     Local Government Areas
