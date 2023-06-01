@@ -1,6 +1,7 @@
 # Election Results
 ## To Check each polling unit details
 - http://Ecclesiastes.pythonanywhere.com/polling/polling-unit/<int:pk>
+    -- Change the int:pk to a number e.g(8,17,etc.)
 - [Polling Unit Details](http://Ecclesiastes.pythonanywhere.com/polling/polling-unit/8)
 
 ## To view the result of a local government
